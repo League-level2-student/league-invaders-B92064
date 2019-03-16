@@ -6,9 +6,10 @@ public class LeagueInvaders {
 	final static int HEIGHT = 800;
 	final static int WIDTH = 500;
 	JFrame gameFrame = new JFrame();
-
-	LeagueInvaders() {
+GamePanel P = new GamePanel();
+	public LeagueInvaders() {
 		this.gameFrame = new JFrame();
+		this.P = new GamePanel();
 		gameFrame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 	}
 
@@ -18,8 +19,13 @@ public class LeagueInvaders {
 	}
 
 	void setup() {
+		gameFrame.add(P);
+		gameFrame.addKeyListener(P);
 		gameFrame.setVisible(true);
 		gameFrame.setSize(WIDTH, HEIGHT);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gameFrame.getContentPane().setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        gameFrame.pack();
+        P.startGame();
 	}
 }
