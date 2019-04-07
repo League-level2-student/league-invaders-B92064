@@ -19,8 +19,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font enterFont;
 	int kills;
 	RocketShip r;
-	int x;
-	int y;
+	int x =250;
+	int y = 700;
 	public GamePanel() {
 		this.timer = timer;
 this.titleFont = new Font("Comic Sans",Font.PLAIN,52);
@@ -104,18 +104,15 @@ timer.start();
 				currentState = END_STATE;
 			}
 		
-			
-			
-			
-			if(e.getKeyCode() == KeyEvent.VK_W) {
-				r.x = r.x +r.speed;
-			}else if(e.getKeyCode() == KeyEvent.VK_S) {
-				r.x = r.x - r.speed;
-			}else if(e.getKeyCode() == KeyEvent.VK_A) {
-				r.y = r.y -r.speed;
-			}else if(e.getKeyCode() == KeyEvent.VK_D) {
-				r.y = r.y +r.speed;
-			}
+		}
+		if(e.getKeyCode() == KeyEvent.VK_W) {
+			r.up = true;
+		}else if(e.getKeyCode() == KeyEvent.VK_S) {
+			r.down = true;
+		}else if(e.getKeyCode() == KeyEvent.VK_A) {
+			r.left = true;
+		}else if(e.getKeyCode() == KeyEvent.VK_D) {
+			r.right = true;
 		}
 	}
 
@@ -123,6 +120,16 @@ timer.start();
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("Works 3");
+		if(e.getKeyCode() == KeyEvent.VK_W) {
+			r.up = false;
+		}else if(e.getKeyCode() == KeyEvent.VK_S) {
+			r.down = false;
+		}else if(e.getKeyCode() == KeyEvent.VK_A) {
+			r.left = false;
+		}else if(e.getKeyCode() == KeyEvent.VK_D) {
+			r.right = false;
+		}
+		
 	}
 	void updateMenuState() {
 		
@@ -147,6 +154,7 @@ timer.start();
 		g.setColor(Color.BLACK);
 		g.fillRect(0,0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
 		r.draw(g);
+		
 	}
 	void drawEndState(Graphics g) {
 		g.setColor(Color.RED);
