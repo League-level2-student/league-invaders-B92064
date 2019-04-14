@@ -19,6 +19,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font enterFont;
 	int kills;
 	RocketShip r;
+	ObjectManager OM;
 	int x =250;
 	int y = 700;
 	public GamePanel() {
@@ -26,6 +27,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 this.titleFont = new Font("Comic Sans",Font.PLAIN,52);
 this.enterFont = new Font("Arial",Font.PLAIN,30);
 this.r = new RocketShip(x,y,50,50);
+this.OM = new ObjectManager(r);
 	}
 
 
@@ -90,6 +92,9 @@ timer.start();
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("Works 2");
+		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			OM.addProjectile(new Projectile(r.x +21, r.y, 10, 10));
+		}
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 			
 			if(currentState == END_STATE){
@@ -135,7 +140,9 @@ timer.start();
 		
 	}
 	void updateGameState() {
-		r.update();
+		OM.update();
+		
+		OM.manageEnemies();
 	}
 	void updateEndState() {
 	
@@ -153,7 +160,7 @@ timer.start();
 	void drawGameState(Graphics g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0,0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
-		r.draw(g);
+		OM.draw(g);
 		
 	}
 	void drawEndState(Graphics g) {
