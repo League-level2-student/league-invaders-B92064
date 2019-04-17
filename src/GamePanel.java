@@ -141,7 +141,6 @@ timer.start();
 	}
 	void updateGameState() {
 		OM.update();
-		
 		OM.manageEnemies();
 	}
 	void updateEndState() {

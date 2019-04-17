@@ -20,6 +20,16 @@ void update() {
 	for(int i = 0; i < alist.size(); i++) {
 		alist.get(i).update();
 	}
+	for(int i = 0; i < alist.size(); i++) {
+		if(alist.get(i).x > 500) {
+			alist.get(i).right = false;
+		}
+	}
+	for(int i = 0; i < alist.size(); i++) {
+		if(alist.get(i).x < 0) {
+			alist.get(i).right = true;
+		}
+	}
 }
 void draw(Graphics h) {
 	R.draw(h);
@@ -46,6 +56,7 @@ void purgeObjects() {
 	for(int i = 0; i < list.size(); i++) {
 		if(list.get(i).isAlive != true) {
 			list.remove(i);
+			System.out.println("Dead");
 		}
 	}
 	for(int i = 0; i < alist.size(); i++) {
