@@ -13,7 +13,7 @@ boolean right = true;
 	}
 	void update() {
 		super.update();
-		y ++;
+		y +=  10;
 		if(right == true) {
 		x = x + r2;
 		}
