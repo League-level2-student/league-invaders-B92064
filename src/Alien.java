@@ -12,6 +12,7 @@ boolean right = true;
 		// TODO Auto-generated constructor stub
 	}
 	void update() {
+		super.update();
 		y ++;
 		if(right == true) {
 		x = x + r2;
@@ -19,10 +20,11 @@ boolean right = true;
 		else if(right == false) {
 		x = x + r3;
 		}
+		collisionBox.setBounds(x,y,width,height);
+		
 	}
 	void draw(Graphics g) {
-		g.setColor(Color.yellow);
-		g.drawRect(x, y, width, height);
+		g.drawImage(GamePanel.alienImg,x,y,width,height,null);
 	}
 
 }

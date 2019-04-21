@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -22,12 +25,35 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	ObjectManager OM;
 	int x =250;
 	int y = 700;
+	public static BufferedImage alienImg;
+	public static BufferedImage rocketImg;
+	public static BufferedImage bulletImg;
+	public static BufferedImage spaceImg;
 	public GamePanel() {
 		this.timer = timer;
 this.titleFont = new Font("Comic Sans",Font.PLAIN,52);
 this.enterFont = new Font("Arial",Font.PLAIN,30);
 this.r = new RocketShip(x,y,50,50);
 this.OM = new ObjectManager(r);
+try {
+
+    alienImg = ImageIO.read(this.getClass().getResourceAsStream("alien.png"));
+
+    rocketImg = ImageIO.read(this.getClass().getResourceAsStream("rocket.png"));
+
+    bulletImg = ImageIO.read(this.getClass().getResourceAsStream("bullet.png"));
+
+    spaceImg = ImageIO.read(this.getClass().getResourceAsStream("space.png"));
+
+} catch (IOException e) {
+
+    // TODO Auto-generated catch block
+
+    e.printStackTrace();
+
+}
+
+
 	}
 
 
@@ -98,7 +124,8 @@ timer.start();
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 			
 			if(currentState == END_STATE){
-
+r = new RocketShip(250, 700, 50, 50);
+OM = new ObjectManager(r);
                 currentState = MENU_STATE;
 
         }	
@@ -142,13 +169,19 @@ timer.start();
 	void updateGameState() {
 		OM.update();
 		OM.manageEnemies();
+		OM.checkCollision();
+		OM.purgeObjects();
+		if(r.isAlive == false) {
+			currentState = END_STATE;
+		}
 	}
 	void updateEndState() {
 	
 	}
 	void drawMenuState(Graphics g) {
-		g.setColor(Color.BLUE);
-		g.fillRect(0,0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		//g.setColor(Color.BLUE);
+		//g.fillRect(0,0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		g.drawImage(spaceImg, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
 		g.setFont(titleFont);
 		g.setColor(Color.YELLOW);
 		g.drawString("LEAGUE INVADERS", 20, 200);
@@ -157,8 +190,12 @@ timer.start();
 		g.drawString("Press SPACE for instructions", 50, 550);
 	}
 	void drawGameState(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.fillRect(0,0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		//g.setColor(Color.BLACK);
+		//g.fillRect(0,0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		g.drawImage(spaceImg, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
+		g.setColor(Color.YELLOW);
+		g.setFont(enterFont);
+		g.drawString("Score: "+OM.getScore(), 20, 70);
 		OM.draw(g);
 		
 	}
@@ -169,7 +206,7 @@ timer.start();
 		g.setFont(titleFont);
 		g.drawString("Game Over", 115, 200);
 		g.setFont(enterFont);
-		g.drawString("You killed "+ kills + " enemies" , 122, 400);
+		g.drawString("You killed "+ OM.getScore() + " enemies" , 122, 400);
 		g.drawString("Press ENTER to restart", 100, 550);
 	}
 }

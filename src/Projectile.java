@@ -8,13 +8,14 @@ int speed = 10;
 		// TODO Auto-generated constructor stub
 	}
  void update() {
+	 super.update();
 	 y -= speed;
 	 if(y < 0) {
 		 isAlive = false;
 	 }
+	 collisionBox.setBounds(x, y, width, height);
  }
  void draw(Graphics g) {
-	g.setColor(Color.red);
-	g.drawRect(x, y, width, height);
+	g.drawImage(GamePanel.bulletImg,x,y,width,height,null);
  }
 }

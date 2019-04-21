@@ -13,6 +13,7 @@ boolean right;
 	
 	}
 	void update() {
+		super.update();
 		if(up == true) {
 			y -= speed;
 			if(y < 0) {
@@ -37,10 +38,10 @@ boolean right;
 				x = 450;
 			}
 		}
+	collisionBox.setBounds(x, y, width, height);
 	}
 	void draw(Graphics g) {
-		g.setColor(Color.BLUE);
-        g.fillRect(x, y, 50, 50);
+		g.drawImage(GamePanel.rocketImg,x,y,width,height,null);
 
 	}
 	
